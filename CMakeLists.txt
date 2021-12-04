@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # project name
-project(digital_filters CXX)
+project(sound_utils CXX)
 
 #--------------- CMake compile config ------------------------------
 enable_language(CXX)
@@ -52,7 +52,6 @@ add_subdirectory(lib)
 
 # libraries
 add_library(${PROJECT_NAME} INTERFACE)
-    target_link_libraries(${PROJECT_NAME} INTERFACE reader)
 
 # for development executable(optional activate)
 option(DEVELOP_EXECUTABLE_${PROJECT_NAME} "Build develop executable file on sound utils package" OFF)
