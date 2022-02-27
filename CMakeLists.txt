@@ -43,15 +43,18 @@ add_custom_target("${PROJECT_NAME}-format-fix"
   COMMENT "Running clang-format(overwrite)"
   VERBATIM
   )
+#------------------ build source config ------------------
 
 # include path
 include_directories(include)
 
-# libraries
+# sub directories
 add_subdirectory(lib)
 
 # libraries
 add_library(${PROJECT_NAME} INTERFACE)
+  # if want to add tools...
+  # target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-tool_name)
 
 # for development executable(optional activate)
 option(DEVELOP_EXECUTABLE_${PROJECT_NAME} "Build develop executable file on sound utils package" OFF)
