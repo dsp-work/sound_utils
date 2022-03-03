@@ -108,6 +108,7 @@ add_subdirectory(lib)
 # libraries
 add_library(${PROJECT_NAME} INTERFACE)
   target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
+  target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-reader)
   # if want to add libraries...
   # target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-tool_name)
 
