@@ -9,7 +9,7 @@
 			"./include"
 		],
 		"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-		"cmake.generator": "MinGW Makefiles",
+		"windows": {"cmake.generator": "MinGW Makefiles"},
 		"cmake.configureArgs": [
 			"-DDEVELOP_EXECUTABLE_sound_utils=ON"
 		],
