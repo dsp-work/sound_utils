@@ -45,7 +45,9 @@ void run_open_file()
 
 void test_read_wav()
 {
-    auto wav = sound_utils::reader::read_wav( "test.wav" );
+    sound_utils::reader::WavIO wav;
+    // wav = sound_utils::reader::read_wav( "test.txt" );
+    wav = sound_utils::reader::read_wav( "test.wav" );
     if ( wav.channel != 2 )
     {
         fprintf( stderr, "Different number of 'channel'.: %d\n", wav.channel );
