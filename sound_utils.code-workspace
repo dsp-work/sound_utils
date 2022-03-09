@@ -18,7 +18,11 @@
 		"editor.formatOnSave": true,
 		"extensions.ignoreRecommendations": false,
 		"C_Cpp.clang_format_fallbackStyle": "WebKit",
-		"clang-format.fallbackStyle": "WebKit"
+		"clang-format.fallbackStyle": "WebKit",
+		"files.associations": {
+			"file_operation": "cpp",
+			"string_operation": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
