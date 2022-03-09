@@ -22,12 +22,19 @@ namespace sound_utils
 
         sound_utils::reader::WavIO read_wav( const std::string& filename )
         {
+#if __GNUC__ > 5
             if ( !std::regex_search( filename, std::regex( ".+\\.wav" ) ) )
             {
                 fprintf( stderr, "Error: [%s l.%d]Incorrect file name.(file name : %s)\n", __FILE__, __LINE__, filename.c_str() );
                 exit( EXIT_FAILURE );
             }
-
+#else
+            if ( filename.find( ".wav" ) == std::string::npos )
+            {
+                fprintf( stderr, "Error: [%s l.%d]Incorrect file name.(file name : %s)\n", __FILE__, __LINE__, filename.c_str() );
+                exit( EXIT_FAILURE );
+            }
+#endif
             sound_utils::reader::WavIO sound;
             auto fp = open_file( filename, "rb", __FILE__, __LINE__ );
             char riff_chunk_ID[4];
