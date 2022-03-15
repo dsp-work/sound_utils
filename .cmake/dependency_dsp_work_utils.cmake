@@ -13,7 +13,7 @@ else() # 見つからない場合には自動インストール
     FetchContent_Declare(
       dsp_work_utils
       GIT_REPOSITORY https://github.com/dsp-work/dsp_work_utils.git
-      GIT_TAG 0.0.2
+      GIT_TAG 0.0.3
     )
     FetchContent_MakeAvailable(dsp_work_utils)
   else()
