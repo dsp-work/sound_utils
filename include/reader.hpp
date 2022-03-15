@@ -1,11 +1,14 @@
 #ifndef __READER_HPP_
 #define __READER_HPP_
 
+#include <Eigen/Dense>
 #include <cstdio>
 #include <cstdlib>
+#include <file_operation>
 #include <regex>
 #include <string>
 #include <vector>
+
 
 namespace sound_utils
 {
