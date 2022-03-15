@@ -19,6 +19,9 @@ include(./.cmake/dependency_dsp_work_utils.cmake)
 
 #------------------ build source config ------------------
 
+# include path
+include_directories(include)
+
 # sub directories
 add_subdirectory(lib)
 
@@ -26,11 +29,9 @@ add_subdirectory(lib)
 add_library(${PROJECT_NAME} INTERFACE)
   target_link_libraries(${PROJECT_NAME} INTERFACE DspWork::Utils)
   target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
+  target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-reader)
   # if want to add libraries...
   # target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-tool_name)
-
-# include path
-target_include_directories(${PROJECT_NAME} INTERFACE include)
 
 # for development executable(optional activate)
 option(DEVELOP_EXECUTABLE_${PROJECT_NAME} "Build develop executable file on sound utils package" OFF)
