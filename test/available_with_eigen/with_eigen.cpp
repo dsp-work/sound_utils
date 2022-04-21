@@ -13,8 +13,6 @@
 using namespace Eigen;
 using namespace std;
 
-using namespace std;
-
 void test_intro1();
 void test_intro2_1();
 void test_intro2_2();

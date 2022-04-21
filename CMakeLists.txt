@@ -24,7 +24,7 @@ add_subdirectory(lib)
 
 # libraries
 add_library(${PROJECT_NAME} INTERFACE)
-  target_link_libraries(${PROJECT_NAME} INTERFACE DspWork::Utils)
+  target_link_libraries(${PROJECT_NAME} INTERFACE dsp_work_utils::utils)
   target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
   # if want to add libraries...
   # target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-tool_name)
