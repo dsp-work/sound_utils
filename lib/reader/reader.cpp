@@ -72,11 +72,12 @@ namespace sound_utils
 
             if ( sound.quantization_bit == 16 )
             {
-                std::vector< short > buf( sound.datasize );
+                Eigen::VectorX< short > buf( sound.datasize );
+                sound.data = Eigen::VectorXd( sound.datasize );
                 fread( buf.data(), sizeof( short ), sound.datasize, fp );
-                for ( size_t i = 0, max = buf.size(); i < max; ++i )
+                for ( int i = 0, max = buf.size(); i < max; ++i )
                 {
-                    sound.data.push_back( static_cast< double >( buf.at( i ) ) );
+                    sound.data( i ) = static_cast< double >( buf( i ) );
                 }
             }
             fclose( fp );

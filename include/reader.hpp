@@ -26,7 +26,11 @@ namespace sound_utils
             unsigned short quantization_bit;
             unsigned int sampling_frequency;
             unsigned int datasize;
-            std::vector< double > data;
+            Eigen::VectorXd data;
+
+        public:
+
+            EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         };
 
         FILE* open_file( const std::string&, const std::string&, const std::string& call_file, const int call_line );
