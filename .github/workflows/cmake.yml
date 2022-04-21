@@ -9,6 +9,39 @@ on:
 #env:
 
 jobs:
+  # Try to build on windows
+  windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # clang build on Debug & Release
+          - name: Debug clang
+            build_type: Debug
+            cc: clang
+            cxx: clang++
+          - name: Release clang
+            build_type: Release
+            cc: clang
+            cxx: clang++
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      - name: Test
+        run: ctest -VV -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
+
+
   # Try to build on ubuntu
   ubuntu:
     name: Build on Ubuntu
@@ -43,16 +76,15 @@ jobs:
       CXX: ${{ matrix.cxx }}
       DEBIAN_FRONTEND: noninteractive
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           apt-get update -y
-          apt-get -y install gnuplot
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       - name: Test
-        run: ctest -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
+        run: ctest -VV -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
 
 
   # Try to build on CentOS
@@ -89,13 +121,52 @@ jobs:
     env:
       BUILD_TYPE: ${{ matrix.build_type }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           yum update -y
-          yum -y install gnuplot
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       - name: Test
-        run: ctest -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
+        run: ctest -VV -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
+
+
+  macos:
+    name: Build on MacOS
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # clang build on Debug & Release
+          - name: Debug clang
+            build_type: Debug
+            cc: clang
+            cxx: clang++
+          - name: Release clang
+            build_type: Release
+            cc: clang
+            cxx: clang++
+          # gcc build on Debug & Release
+          - name: Debug GCC
+            build_type: Debug
+            cc: gcc
+            cxx: g++
+          - name: Release GCC
+            build_type: Release
+            cc: gcc
+            cxx: g++
+    runs-on: macos-latest
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+         brew upgrade
+         brew install gcc git make cmake boost
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      - name: Test
+        run: ctest -VV -C ${{env.BUILD_TYPE}} --test-dir ${{github.workspace}}/build
